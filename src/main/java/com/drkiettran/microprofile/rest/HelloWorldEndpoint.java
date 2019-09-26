@@ -29,15 +29,18 @@ public class HelloWorldEndpoint {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/{year}/{month}/{day}")
-	public Response doPutDate(@PathParam("year") int year, @PathParam("month") int month, @PathParam("day") int day,
+	@Path("/{firstname}/{lastname}")
+	public Response doPutName(@PathParam("firstname") String firstName, @PathParam("lastname") String lastName,
 			Message inMessage) throws UnknownHostException {
 		System.out.println("inMessage: " + inMessage.getName() + ":" + inMessage.getMessage());
-
-		String date = year + "/" + month + "/" + day;
+		
+		// String date = year + "/" + month + "/" + day;
 		Message message = new Message();
 		Greetings greetings = new Greetings();
 		message.setName(inMessage.getName());
+		message.setLastName(lastName);
+		message.setFirstName(firstName);
+		message.setId((int) (Math.random() * 1000000L));
 		message.setMessage(greetings.hello(inMessage.getName()));
 		return Response.status(200).entity(message).build();
 	}
